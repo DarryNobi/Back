@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^upload_map/', views.upload_map),
     url(r'^_upload_map/', views._upload_map),
     url(r'^add_Account/', views.add_Account),
+    url(r'^add_usr/', views.add_usr),
     url(r'^deliver_map/', views.deliver_map),
 
 ]
