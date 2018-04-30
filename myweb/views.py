@@ -22,6 +22,12 @@ from django.http import HttpResponse, JsonResponse
 User = get_user_model()
 
 # Create your views here.
+
+def index(request):
+    return render(request,
+                  template_name='index.html')
+
+
 def account_inquiry(request):
     users_temp = User.objects.all()
     d_users = {}
