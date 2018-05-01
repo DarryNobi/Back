@@ -53,15 +53,16 @@ function showList(){
                 'id' : 'modify' + item.id,
                 text : '修改'
             }))
-            .append($('<button/>',{
-                'class' : 'operate',
-                'id' : 'status' + item.id,
-                text : '禁用'
-            }))
             ))
             .appendTo(resultTab);
 
-    button=$("#release"+ item.id);
-   //button.on("click",{"num":item.id},changeStatus);
+    button_modify=$("#modify"+ item.id);
+    button_modify.on("click",{"username":item.username},modify_information);
     });
 };
+function modify_information(data)
+{
+var username=data.data.username;
+location.href="/info_revise/?txt="+username;//发送txt里面的内容
+}
+

@@ -94,10 +94,14 @@ font-size:25px;
 
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.1/js/bootstrap.min.js"></script>
-
     <script>
     var d_users={{ d_users|safe }}
 </script>
+    <script >
+        $.ajaxSetup({
+         data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+        });
+  </script>
  <script src="{% static 'js/account_inquiry.js' %}"></script>
 </body>
 </html>

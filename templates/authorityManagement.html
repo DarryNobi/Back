@@ -65,13 +65,13 @@ table {
 
 
                     <div class="table-responsive">
-						<table style="height:40px;" border="0" cellspacing="0" cellpadding="0" class="table">
+						<table id="resultTab" style="height:40px;" border="0" cellspacing="0" cellpadding="0" class="table">
 						<tr class=" label-primary">
-
+                            <th scope="col" width="15%"><span style="color:white"><h4>序号</h4></span></th>
                             <th scope="col" width="15%"><span style="color:white"><h4>账号</h4></span></th>
-                            <th scope="col" width="15%"><span style="color:white"><h4>联系人</h4></span></th>
+                            <th scope="col" width="20%"><span style="color:white"><h4>单位名称</h4></span></th>
                             <th scope="col" width="20%"><span style="color:white"><h4>已有权限</h4></span></th>
-                            <th scope="col" width="15%"><span style="color:white"><h4>状态</h4></span></th>
+                            <th scope="col" width="20%"><span style="color:white"><h4>状态</h4></span></th>
                             <!--<th scope="col" class ="authorityTh"><span class="authoritySpan" style="color:white"><h4>修改权限</h4></span></th>-->
                             <th scope="col"><span style="color:white"><h4>修改权限</h4></span></th>
                         </tr>
@@ -91,33 +91,24 @@ table {
     </div>
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.1/js/bootstrap.min.js"></script>
+    	<script>
+    var d_users={{ d_users|safe }}
+</script>
+
 <script type="text/javascript">
-
-     var back_data = {{ d_users|safe }};
-    /*删除*/
-    /*dataArray为请求返回的数据*/
-
-    /*删除*/
-
-
-
-    // var dataArray = new Array()
-
-    // background_data为后台数据
-    // dataArray.push(background_data);
-
-
-    /*判断是否有搜索条件，根据搜索条件去渲染表格*/
+var back_data = {{ d_users|safe }};
 window.onload=function(){
             $(".data").remove();
-
+            //for(var i = 0, len =  back_data.length; i < len; i++){
             for(var i in back_data){
-                var html = '<tr class="data"><td>' + back_data[i]['id'] + '</td><td>' +  back_data[i]['username'] + '</td><td id="permissions' + i + '">' +  back_data[i]['user_permissions'] + '</td>'
+                var html = '<tr class="data"><td>' + i + '</td><td>' +  back_data[i]['username'] + '</td><td id="enterprise_name' + i + '">' +  back_data[i]['enterprise_name'] + '</td><td id="permissions' + i + '">'+  back_data[i]['user_permissions'] + '</td>'
                 + '<td><select id="status' + i + '" class ="status" ><option id="openSta' + i + '" value="启用">启用</option><option id="closeSta' + i + '" value="禁用">禁用</option></select></td><td class="authorityTd"><p>'
-                + '用户管理' + '<input class="authorityList' + i +'" type="checkbox" name="checkbox' + i + '" value="1" /></p><p>'
-                + '违建管理' + '<input class="authorityList' + i +'" type="checkbox" name="checkbox' + i + '" value="2" /></p><p>'
-                + '拆迁管理' + '<input class="authorityList' + i +'" type="checkbox" name="checkbox' + i + '" value="3" /></p><p>'
-                + '资源管理' + '<input class="authorityList' + i +'" type="checkbox" name="checkbox' + i + '" value="4" /></p><p>'
+                + '市政管理' + '<input class="authorityList' + i +'" type="checkbox" name="checkbox' + i + '" value="1" /></p><p>'
+                + '农业管理' + '<input class="authorityList' + i +'" type="checkbox" name="checkbox' + i + '" value="2" /></p><p>'
+                + '林业管理' + '<input class="authorityList' + i +'" type="checkbox" name="checkbox' + i + '" value="3" /></p><p>'
+                + '环境管理' + '<input class="authorityList' + i +'" type="checkbox" name="checkbox' + i + '" value="4" /></p><p>'
+                + '道路管理' + '<input class="authorityList' + i +'" type="checkbox" name="checkbox' + i + '" value="5" /></p><p>'
+                + '沉降检测' + '<input class="authorityList' + i +'" type="checkbox" name="checkbox' + i + '" value="6" /></p><p>'
                 + '<button type="button" id="subBut' + i + '" class="btn btn-primary subBut">确认</button>&nbsp&nbsp&nbsp&nbsp&nbsp'
                 + '</p></td></tr>';
                 $(".table").append(html);
@@ -154,7 +145,6 @@ window.onload=function(){
 }
 
 
-
 function status_confirm(data){
 var mes="您确定修改吗？";
 if(confirm(mes)==true)
@@ -178,7 +168,7 @@ if(confirm(mes)==true)
             },
             dataType:'json',
             success:function(){
-            alert('bbbbbbb')},
+            alert('success')},
 
 
 
@@ -198,7 +188,7 @@ if(confirm(mes)==true)
            },
            dataType:'json',
            success:function(){
-            alert('bbbbbbb')},
+            alert('success')},
 
  });
         }

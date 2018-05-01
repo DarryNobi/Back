@@ -95,44 +95,7 @@ font-size:25px;
 	</div> 
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.1/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-	/*删除*/
-	/*dataArray为请求返回的数据*/
-	var background_data = [
-	{number:111123, contact:'张三', authority:'违建管理部门',},
-	{number:111124, contact:'李四', authority:'违建管理部门',},
-	{number:111125, contact:'王五', authority:'违建管理部门',},
-	{number:111126, contact:'赵六', authority:'违建管理部门',},
-	];
-	/*删除*/
 
-	// var dataArray = new Array()
 
-	// background_data为后台数据
-	// dataArray.push(background_data);
-	
-	
-	/*判断是否有搜索条件，根据搜索条件去渲染表格*/
-
-	function search() {
-		if($("#IDCard").val()) {
-			$(".data").remove();
-			for(var i = 0, len =  background_data.length; i < len; i++){
-				if($("#IDCard").val() == background_data[i].number) {
-					var html = '<tr class="data"><td>' + background_data[i].number + '</td><td>' + background_data[i].contact + '</td><td>' + background_data[i].authority + '</td></tr>';
-					$(".table").append(html);
-					$("#IDCard").val('').focus()
-					return // 证明已经找到符合条件的数据，所以退出整个函数
-				} 
-			}
-			/**
-			循环执行完毕仍未找到符合条件的数据，故不存在，所以提示
-			**/
-			alert('未找到该人员');
-			$("#IDCard").val('').focus()
-		}
-	}
-	
-</script>
 </body>
 </html>

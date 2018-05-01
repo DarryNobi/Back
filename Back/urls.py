@@ -25,11 +25,19 @@ urlpatterns = [
     url(r'^index/', views.index),
     url(r'^add_usr/', views.add_usr),
     url(r'^account_show/', views.account_show),
+    url(r'^_account_show/', views._account_show),
     url(r'^account_inquiry/', views.account_inquiry),
     url(r'^add_Account/', views.add_Account),
-
+    url(r'^info_revise/', views.info_revise),
+    url(r'^_info_revise/', views._info_revise),
     url(r'^deliver_map/', views.deliver_map),
     url(r'^upload_map/', views.upload_map),
     url(r'^_upload_map/', views._upload_map),
+    url(r'^status_revise/', views.status_revise),
+    url(r'^permission_revise/', views.permission_revise),
+    url(r'^password_revise/', views.password_revise),
+    url(r'^_password_revise/', views.password_reset),
+    url(r'^sinfo_revise/', views.sinfo_revise),
+    url(r'^_sinfo_revise/', views._sinfo_revise),
 
 ]

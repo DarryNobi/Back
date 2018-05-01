@@ -81,7 +81,7 @@
 			<div class="form-group has-feedback">
                 <h1 align="center" >修改个人信息</h1>
              </div>
-			 
+
             <div class="form-group has-feedback">
                 <label for="username"><h4>账号</h4></label>
                 <div class="input-group">
@@ -94,18 +94,8 @@
                 <label for="username"><h4>单位名称</h4></label>
                 <div class="input-group">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                    <input id="enterprise_name" name="enterprise_name" class="form-control" placeholder="请输入账号" maxlength="20" type="text">
+                    <input id="enterprise_name" name="enterprise_name" class="form-control" placeholder="请输入单位名称" maxlength="20" type="text">
                 </div>
-            </div>
-
-           <div class="form-group has-feedback">
-                <label for="username"><h4>联系人</h4></label>
-                <div class="input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                    <input id="contact_usr" name='contact_usr' class="form-control" placeholder="请输入单位名称" maxlength="20" type="text">
-                </div>
-
-
             </div>
             <div class="form-group has-feedback">
                 <label for="phoneNum"><h4>联系人电话</h4></label>
@@ -116,17 +106,6 @@
 
             </div>
 
-         <div class="form-group has-feedback">
-                <label for="department"><h4>用户类型</h4></label>
-                <div class="input-group",name="input-group">
-                    <select style="size: 6;" name="usr_type">
-                        <option value="市政部门" name="ibuild">市政部门</option>
-                        <option value="农业公司" name="agriculture">农业公司</option>
-                        <option value="林业公司" name="forest">林业公司</option>
-                        <option value="建筑公司" name="road">建筑公司</option>
-                    </select>
-                </div>
-            </div>
     </div>
 
 
@@ -141,28 +120,5 @@
         <p>{{message}}<p>
     </div>
 </div>
-<script>
-   function GetRequest() {
-    var url = location.search; //获取url中"?"符后的字串
-    var theRequest = new Object();
-    if (url.indexOf("?") != -1) {
-        var str = url.substr(1);
-        strs = str.split("&");
-        for (var i = 0; i < strs.length; i++) {
-            theRequest[strs[i].split("=")[0]] = decodeURIComponent(strs[i].split("=")[1]);
-        }
-    }
-    return theRequest;
-}
-  window.onload=function(){
-  var a=GetRequest();
-  var username=a['txt'];
-  $("#username").val(username);
-
-  };
-
-
-</script>
-
 </body>
 </html>
