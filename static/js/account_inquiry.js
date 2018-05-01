@@ -1,21 +1,13 @@
 
 var data=[];
-for(var i in d_maps){
+for(var i in d_users){
 
-data.push(d_maps[i])
+data.push(d_users[i])
 
 }
 
 window.onload=function(){
     //默认获取当前日期
-    var today = new Date();
-    var nowdate = (today.getFullYear()) + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-    //对日期格式进行处理
-    var date = new Date(nowdate);
-    var mon = date.getMonth() + 1;
-    var day = date.getDate();
-    var mydate = date.getFullYear() + "-" + (mon < 10 ? "0" + mon : mon) + "-" + (day < 10 ? "0" + day : day);
-    $(".nowdate").val(mydate);
     showList();
 };
 function showList(){
@@ -23,10 +15,10 @@ function showList(){
     var resultTab = $("#resultTab");
     var pubText="";
     data.forEach(function(item){
-        if(item.isPublish)
-          pubText="取消发布";
+     if(item.is_active)
+          pubText="正常";
         else
-          pubText="发布"
+          pubText="禁用"
         $(
             '<tr/>', {
                 'style' : 'font-size:18px'
@@ -34,47 +26,42 @@ function showList(){
                 text : item.id
             }))
             .append($('<td/>',{
-                text : item.name
+                text : item.username
             }))
             .append($('<td/>',{
-                text : item.gen_data
+                text : item.enterprise_name
             }))
             .append($('<td/>',{
-                text : item.SatelliteID
+                text : item.phone
             }))
             .append($('<td/>',{
-                text : item.type
+                text : item.contact_usr
             }))
             .append($('<td/>',{
-                text : item.download
+                text : item.usr_type
+            }))
+            .append($('<td/>',{
+                text : pubText
+            }))
+             .append($('<td/>',{
+                text : item.user_permissions
             }))
             .append($('<td/>')
             .append($('<p/>')
             .append($('<button/>',{
                 'class' : 'operate',
-                'id' : 'look' + item.id,
-                text : '查看'
+                'id' : 'modify' + item.id,
+                text : '修改'
             }))
             .append($('<button/>',{
                 'class' : 'operate',
-                'id' : 'download' + item.id,
-                text : '下载'
-            }))
-            .append($('<button/>',{
-                'class' : 'operate',
-                'id' : 'del' + item.id,
-                text : '删除'
-            }))
-            .append($('<button/>',{
-                'class' : 'publish',
-                'id' : 'release' + item.id,
-                'type':'submit',
-                text: pubText
+                'id' : 'status' + item.id,
+                text : '禁用'
             }))
             ))
             .appendTo(resultTab);
 
     button=$("#release"+ item.id);
-    button.on("click",{"num":item.id},changeStatus);
+   //button.on("click",{"num":item.id},changeStatus);
     });
 };

@@ -28,7 +28,7 @@ def index(request):
                   template_name='index.html')
 
 
-def account_inquiry(request):
+def account_show(request):
     users_temp = User.objects.all()
     d_users = {}
     for i in range(len(users_temp)):
@@ -39,15 +39,38 @@ def account_inquiry(request):
             user_permissions.append(tmp)
         d_users[i]['user_permissions'] = user_permissions
     if d_users:
-        return render(request, 'am_permissions_management.html',
+        return render(request, 'account_Inquiry.html',
                       {'d_users': json.dumps(d_users, cls=DjangoJSONEncoder)})
     else:
-        return render(request, 'am_permissions_management.html', {'message': '查找结果为空！'})
+        return render(request, 'account_Inquiry.html', {'message': '查找结果为空！'})
 
 
-def account_Inquiry(request):
-        return render(request,
-                      template_name='account_Inquiry.html')
+def account_inquiry(request):
+    message = request.POST.get('message', False)
+    users_temp = User.objects.filter(username=message)
+
+    query_method = request.POST.get('query_method', False)
+    users_temp = []
+    if query_method == '1':
+        users_temp = User.objects.filter(username=message)
+    if query_method == '2':
+        users_temp = User.objects.filter(enterprise_name=message)
+    if query_method == '3':
+        users_temp = User.objects.filter(phone=message)
+    if query_method == '4':
+        users_temp = User.objects.filter(contact_usr=message)
+    users = {}
+    for i in range(len(users_temp)):
+        users[i] = model_to_dict(users_temp[i])
+        user_permissions = []
+        for j in range(len(users[i]['user_permissions'])):
+            tmp = users[i]['user_permissions'][j].name
+            user_permissions.append(tmp)
+        users[i]['user_permissions'] = user_permissions
+    if users:
+        return render(request, 'account_Inquiry.html', {'d_users': json.dumps(users, cls=DjangoJSONEncoder)})
+    else:
+        return render(request, 'account_Inquiry.html', {'message': '查找结果为空！'})
 
 
 def add_Account(request):
@@ -58,14 +81,14 @@ def add_Account(request):
 def add_usr(request):
     username = request.POST.get("username", False)
     enterprise_name= request.POST.get("enterprise_name", False)
-    user_type= request.POST.get("user_type", False)
     contact_usr= request.POST.get("contact_usr", False)
     phone= request.POST.get("phone", False)
-    check_box = request.POST.get('check_box', False)
-    check_box = json.loads(check_box)
-    permission_dict = {'1': 'user_management', '2': 'ibuild_management', '3': 'demolition_management',
-                       '4': 'recource_management'}
-    user = User.objects.create_user(username=username, enterprise_name=enterprise_name, user_type=user_type,
+    user_type = request.POST.get("user_type", False)
+    check_box = request.POST.getlist('check_box', False)
+    #check_box = json.loads(check_box)
+    permission_dict = {'1': "city_management", '2': "agriculture_management", '3': "forestry_management",
+                       '4': "environment_management",'5': "road_management",'6': "settlement_observation"}
+    user = User.objects.create_user(username=username, enterprise_name=enterprise_name, usr_type=user_type,
                                     contact_usr=contact_usr, phone=phone)
     user.save()
     for i in check_box:
@@ -109,7 +132,7 @@ def upload_map(request):
 
 
 def _upload_map(request):
-    map_name = request.POST.get("mapname", False)
+    map_name = request.POST.get("map_name", False)
     satelite= request.POST.get("satelite", False)
     desc=request.POST.get("desc", False)
     wholemap= request.POST.get("wholemap", False)

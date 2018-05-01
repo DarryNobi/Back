@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="Keywords" content="天津未来科技城卫星遥感资源管理系统"/>
     <title>home</title>
-
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <!-- BOOTSTRAP STYLES-->
     <link href="{% static 'css/bootstrap.css'  %}" rel="stylesheet" />
     <!-- FONTAWESOME STYLES-->
@@ -17,11 +17,16 @@
     <link href="{% static 'css/custom.css' %}" rel="stylesheet" />
     <!-- GOOGLE FONTS-->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+     <script src="{% static 'js/bootstrap.js' %}"></script>
+    <!-- METISMENU SCRIPTS -->
+    <script src="{% static 'js/jquery.metisMenu.js' %}"></script>
+       <!-- CUSTOM SCRIPTS -->
+    <script src="{% static 'js/custom.js' %}"></script>
 
     <script src="{% static 'js/common.js' %}"></script>
     <style>
         #container{
-	        background: #001234;
+	        background: #0090ff;
 	        text-align:center;
 	        line-height:80px;
         }
@@ -70,67 +75,57 @@
                         <a id="home" class="active-menu" href="javascript:void(0)" onclick="open_link('/home/');" ><i class="fa fa-dashboard "></i>首页</a>
                     </li>
 
-                    <li><a href="#"><i class="fa fa-desktop "></i>影像处理<span class="fa arrow"></span></a>
+                    <li><a href="#"><i class="fa fa-desktop "></i>用户管理<span class="fa arrow"></span></a>
                       <ul class="nav nav-second-level">
                             <li>
-                              <a href="javascript:void(0)" onclick="open_link('/map/');" ><i class="fa fa-toggle-on"></i>矢量标绘</a>
+                              <a href="javascript:void(0)" onclick="open_link('/account_show/');" ><i class="fa fa-toggle-on">用户查询</i></a>
                               </li>
-                            <li> <a href="notification.html"><i class="fa fa-bell "></i>地物识别</a> </li>
-                            <li>
-                                <a href="javascript:void(0)" onclick="open_link('/roller_shutters/'); "> <i class="fa fa-toggle-on"></i>变化感知</a>
-                            </li>
+                            <li> <a href="javascript:void(0)" onclick="open_link('/add_Account/');"><i class="fa fa-toggle-on"></i>新增用户</a> </li>
+
                         </ul>
                     </li>
 
-                     <li><a href="#"><i class="fa fa-yelp "></i>资源管理<span class="fa arrow"></span></a>
+                     <li><a href="#"><i class="fa fa-yelp "></i>权限管理<span class="fa arrow"></span></a>
                        <ul class="nav nav-second-level">
                             <li>
-                                <a  href="javascript:void(0)" onclick="open_link('/resource_search/');"><i class="fa fa-flash "></i>资源查询</a>
+                                <a  href="javascript:void(0)" onclick="open_link('/permission_inquiry/');"><i class="fa fa-flash "></i>权限查询</a>
                             </li>
-                             <li>
-                                <a href="component.html"><i class="fa fa-key "></i>地图下载</a>
+
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#"><i class="fa fa-yelp "></i>模块管理<span class="fa arrow"></span></a>
+                         <ul class="nav nav-second-level">
+                            <li>
+                                <a href="invoice.html"><i class="fa fa-coffee"></i>模块查询</a>
+                            </li>
+                            <li>
+                                <a href="pricing.html"><i class="fa fa-flash "></i>新增模块</a>
                             </li>
                         </ul>
                     </li>
 
                     <li>
-                        <a href="#"><i class="fa fa-yelp "></i>违建管理<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-yelp "></i>图斑管理<span class="fa arrow"></span></a>
                          <ul class="nav nav-second-level">
                             <li>
-                                <a href="invoice.html"><i class="fa fa-coffee"></i>违建影像对比</a>
+                                <a href="panel-tabs.html"><i class="fa fa-toggle-on"></i>图斑查询</a>
                             </li>
                             <li>
-                                <a href="pricing.html"><i class="fa fa-flash "></i>违建信息管理</a>
-                            </li>
-                        </ul>
-                    </li>
-
-                    <li>
-                        <a href="#"><i class="fa fa-yelp "></i>拆迁管理<span class="fa arrow"></span></a>
-                         <ul class="nav nav-second-level">
-                            <li>
-                                <a href="panel-tabs.html"><i class="fa fa-toggle-on"></i>拆迁影像对比</a>
-                            </li>
-                            <li>
-                                <a href="notification.html"><i class="fa fa-bell "></i>拆迁管理</a>
+                                <a href="notification.html"><i class="fa fa-bell "></i>图斑上传</a>
                             </li>
                         </ul>
                     </li>
 
                      <li>
-                        <a href="#"><i class="fa fa-yelp "></i>账户管理<span class="fa arrow"></span></a>
+                        <a href="#"><i class="fa fa-yelp "></i>资源管理<span class="fa arrow"></span></a>
                          <ul class="nav nav-second-level">
                             <li>
-                                <a href="javascript:void(0)" onclick="open_link('/account_inquiry/');"><i class="fa fa-toggle-on"></i>账户查询</a>
+                                <a href="javascript:void(0)" onclick="open_link('/account_inquiry/');"><i class="fa fa-toggle-on"></i>资源查询</a>
                             </li>
                             <li>
-                                <a href="javascript:void(0)" onclick="open_link('/add_account/');"> <i class="fa fa-bell "></i>新增账户</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)" onclick="open_link('/permissions_query/');"><i class="fa fa-bell "></i>权限查询</a>
-                            </li>
-                             <li>
-                                <a href="javascript:void(0)" onclick="open_link('/authority_management/');"></i>权限管理</a>
+                                <a href="javascript:void(0)" onclick="open_link('/upload_map/');"> <i class="fa fa-bell "></i>资源上传</a>
                             </li>
                         </ul>
                     </li>
@@ -177,12 +172,8 @@
     <!-- /. FOOTER  -->
     <!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
     <!-- JQUERY SCRIPTS -->
-    <script src="{% static 'js/jquery-1.10.2.js' %}"></script>
+
     <!-- BOOTSTRAP SCRIPTS -->
-    <script src="{% static 'js/bootstrap.js' %}"></script>
-    <!-- METISMENU SCRIPTS -->
-    <script src="{% static 'js/jquery.metisMenu.js' %}"></script>
-       <!-- CUSTOM SCRIPTS -->
-    <script src="{% static 'js/custom.js' %}"></script>
+
 </body>
 </html>

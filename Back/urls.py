@@ -23,9 +23,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     url(r'^index/', views.index),
-
+    url(r'^add_usr/', views.add_usr),
+    url(r'^account_show/', views.account_show),
     url(r'^account_inquiry/', views.account_inquiry),
-    url(r'^account_Inquiry/', views.account_Inquiry),
     url(r'^add_Account/', views.add_Account),
 
     url(r'^deliver_map/', views.deliver_map),

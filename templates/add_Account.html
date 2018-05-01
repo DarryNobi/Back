@@ -7,7 +7,7 @@
 <title>新增账号</title>
      {% csrf_token %}
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
-    <script src="{% static 'js/jquery.validate.js' %}"></script>
+    <script src="{% static 'js/jquery.validate.min.js' %}"></script>
 
 <script src="{% static 'js/messages_zh.min.js' %}"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -145,7 +145,7 @@ $().ready(function() {
 
 <div class="container">
     <div class="col-md-8 col-md-offset-2">
-        <form action="/add_usr/" class="" method="post" id="add_account_form">
+        <form action="/add_usr/" class="" method="post" id="add_usr_form">
  {% csrf_token %}
             <div class="form-group has-feedback">
                 <label for="userNum"><h4>账号</h4></label>
@@ -161,7 +161,7 @@ $().ready(function() {
                 <label for="password"><h4>单位名称</h4></label>
                 <div class="input-group">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                    <input id="enterprise_name" name="enterprise_name" class="form-control" placeholder="请输入单位名称" maxlength="20" type="password">
+                    <input id="enterprise_name" name="enterprise_name" class="form-control" placeholder="请输入单位名称" maxlength="20" type="text">
                 </div>
 
 
@@ -190,13 +190,13 @@ $().ready(function() {
             </div>
 
             <div class="form-group has-feedback">
-                <label for="department"><h4>部门</h4></label>
+                <label for="department"><h4>用户类型</h4></label>
                 <div class="input-group",name="input-group">
-                    <select style="size: 6;" name="department_name">
-                        <option value="违建管理部门" name="ibuild">违建管理部门</option>
-                        <option value="农业资源管理部门" name="agriculture">农业资源管理部门</option>
-                        <option value="林业资源管理部门" name="forest">林业资源管理部门</option>
-                        <option value="道路资源管理部门" name="road">道路资源管理部门</option>
+                    <select style="size: 6;" name="user_type">
+                        <option value="市政部门" name="ibuild">市政部门</option>
+                        <option value="农业公司" name="agriculture">农业公司</option>
+                        <option value="林业公司" name="forest">林业公司</option>
+                        <option value="建筑公司" name="road">建筑公司</option>
                     </select>
                 </div>
             </div>

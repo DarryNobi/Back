@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	{% load staticfiles %}
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +14,7 @@
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+
 <![endif]-->
 <style>
 .bs-docs-home
@@ -36,14 +38,14 @@ font-size:25px;
 			<!--<div class="col-sm-3"></div>-->
 			<div class="col-sm-2"></div>
 			<!--<div class="col-sm-6">-->
-			<div class="col-sm-6">
+			<div class="col-sm-6" style="width:100%;">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<!--<h3 class="panel-title"><strong>账号查询</strong></h3>-->
 					<h2><strong>账号查询</strong></h2>
 				</div>
 				<div class="panel-body">
-					<form action="/_account_inquiry/" method="post" role="form" name="form1">
+					<form action="/account_inquiry/" method="post" role="form" name="form1">
 						{% csrf_token %}
 
 		<div class="form-group has-feedback">
@@ -51,7 +53,7 @@ font-size:25px;
                 <div class="input-group",name="input-group">
                     <select style="size: 6;width:250px;height:50px;" name="query_method">
                         <option value='1' name="ibuild">用户名</option>
-                        <option value='2' name="agriculture">部门名</option>
+                        <option value='2' name="agriculture">单位名</option>
                         <option value='3' name="forest">手机号</option>
                         <option value='4' name="road">联系人</option>
                     </select>
@@ -60,16 +62,15 @@ font-size:25px;
 						<div class="form-group">
 							<label for="username"><h3>请输入查询信息</h3></label>
 						<div class="input-group"> 
-							<input style="height:50px;" type="text" class="form-control" id="message" name="message" placeholder="请输入账号" >
-							<span class="input-group-btn"> 
-								<button  style="height:50px;" type="submit" ><h4>查询</h4></button>
-							</span> 
+							<input style="size: 6;width:250px;height:50px;" type="text" class="form-control" id="message" name="message" placeholder="请输入账号" >
+							<button   type="submit" ><h4>查询</h4></button>
+
 						</div> 
 						</div> 
 					</form>
 
 					<div class="table-responsive">
-						<table style="height:40px;" border="0" cellspacing="0" cellpadding="0" class="table">
+						<table id="resultTab" style="height:40px;" border="0" cellspacing="0" cellpadding="0" class="table">
 						<tr class=" label-primary">
 							<th scope="col" width="10%" ><span style="color:white"><h4>序号</h4></span></th>
 							<th scope="col" width="10%" ><span style="color:white"><h4>用户名</h4></span></th>
@@ -79,11 +80,8 @@ font-size:25px;
 							<th scope="col" width="10%" ><span style="color:white"><h4>用户类型</h4></span></th>
 							<th scope="col" width="10%" ><span style="color:white"><h4>状态</h4></span></th>
 							<th scope="col" width="10%" ><span style="color:white"><h4>权限 </h4></span></th>
-							<th scope="col" width="10%" ><div style="color:white"><h4>状态</h4></div></th>
 							<th scope="col" width="10%" ><span style="color:white"><h4>操作</h4></span></th>
 						</tr>
-
-
 						</table>
 						<p>{{message1}}</p>
 						</div>
@@ -96,12 +94,10 @@ font-size:25px;
 
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.1/js/bootstrap.min.js"></script>
-	 <script >
-        $.ajaxSetup({
-         data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
-        });
-    </script>
-    <script>var users={{ users|safe }};</script>
+
+    <script>
+    var d_users={{ d_users|safe }}
+</script>
  <script src="{% static 'js/account_inquiry.js' %}"></script>
 </body>
 </html>
