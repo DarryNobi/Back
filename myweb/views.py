@@ -197,7 +197,6 @@ def query_module(request):
     for i in range(len(modules)):
         d_modules[i] = model_to_dict(modules[i])
     return render(request,'query_module.html',{'d_modules': json.dumps(d_modules, cls=DjangoJSONEncoder)})
-      return HttpResponse(json.dumps({'message': '查找结果为空！'}))
 
 def fuzzy_search(message):
     list1=[]
@@ -216,7 +215,7 @@ def info_revise(request):
     return render(request, 'info_revise.html', {'username': username})
 
 def sinfo_revise(request):
-    return render(request, template_name='info_revise.html')
+    return render(request, template_name='sinfo_revise.html')
 
 
 def _info_revise(request):
@@ -295,16 +294,12 @@ def password_reset(request):
 def _sinfo_revise(request):
         username = request.POST.get("username", False)
         enterprise_name = request.POST.get("enterprise_name", False)
-        contact_usr = request.POST.get("contact_usr", False)
         phone = request.POST.get("phone", False)
-        usr_type = request.POST.get("usr_type", False)
         user = User.objects.get(username=username)
         if user:
             user.enterprise_name = enterprise_name
-            user.usr_type = usr_type
             user.phone = phone
-            user.contact_usr = contact_usr
             user.save()
-            return render(request, 'info_revise.html', {'message': '修改成功！'})
+            return render(request, 'sinfo_revise.html', {'message': '修改成功！'})
         else:
-            return render(request, 'info_revise.html', {'message': '用户不存在！'})
+            return render(request, 'sinfo_revise.html', {'message': '用户不存在！'})
