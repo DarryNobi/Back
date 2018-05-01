@@ -32,6 +32,8 @@ urlpatterns = [
     url(r'^_info_revise/', views._info_revise),
     url(r'^deliver_map/', views.deliver_map),
     url(r'^upload_map/', views.upload_map),
+    url(r'^query_map/', views.query_map),
+    url(r'^_download_map/', views._download_map),
     url(r'^_upload_map/', views._upload_map),
     url(r'^status_revise/', views.status_revise),
     url(r'^permission_revise/', views.permission_revise),
@@ -39,5 +41,11 @@ urlpatterns = [
     url(r'^_password_revise/', views.password_reset),
     url(r'^sinfo_revise/', views.sinfo_revise),
     url(r'^_sinfo_revise/', views._sinfo_revise),
+    url(r'^_download_map/', views._download_map),
+    url(r'^_delete_map/', views._delete_map),
+
+    url(r'^add_module/', views.add_module),
+    url(r'^_add_module/', views._add_module),
+    url(r'^query_module/', views.query_module),
 
 ]
