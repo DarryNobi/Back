@@ -15,6 +15,7 @@ from myweb.models import Buser
 from myweb.models import Bmap
 import json
 from django.core import serializers
+from django.http import FileResponse
 
 from django.forms.models import model_to_dict
 from django.core.serializers.json import DjangoJSONEncoder
@@ -129,6 +130,12 @@ def upload_map(request):
     return render(request,
                   template_name='upload_map.html')
 
+def query_map(request):
+    maps=Bmap.objects.all()
+    d_maps = {}
+    for i in range(len(maps)):
+        d_maps[i] = model_to_dict(maps[i])
+    return render(request,'query_map.html',{'d_maps': json.dumps(d_maps, cls=DjangoJSONEncoder)})
 
 
 def _upload_map(request):
@@ -150,4 +157,49 @@ def deliver_map(request):
     if d_maps:
       return HttpResponse(json.dumps({'d_maps': json.dumps(d_maps, cls=DjangoJSONEncoder)}))
     else:
-      return HttpResponse(json.dumps({'message': '查找结果为空！'}))
+      return HttpResponse(json.dumps({'d_maps': ''}))
+
+MAPBASEPATH='/home/zhou/PycharmProjects/Back/Maps/'
+def _download_map(request):
+    mapid=request.GET.get("id",False)
+    if mapid:
+        map = Bmap.objects.get(id=mapid)
+        filename=map.wholemap_path
+        pathname=map.wholemap_path.split('.')[0]
+        file = open(MAPBASEPATH+pathname+'/'+filename, 'rb')
+        response = FileResponse(file)
+        response['Content-Type'] = 'application/octet-stream'
+        response['Content-Disposition'] = 'attachment;filename='+filename
+        return response
+
+def _delete_map(request):
+    mapid=request.GET.get("id", False)
+    if mapid:
+        map=Bmap.objects.get(id=mapid)
+        map.delete()
+        return JsonResponse({'result':'success'})
+    else:
+        return JsonResponse({'result':'error'})
+
+def add_module(request):
+    return render(request,'add_module.html')
+
+def _add_module(request):
+    module_name = request.POST.get("module_name", False)
+    image = request.POST.get("image", False)
+    purpose = request.POST.get("purpose", False)
+    create_time = request.POST.get("create_time", False)
+    modify_time = request.POST.get("modify_time", False)
+    is_active = request.POST.get("is_active", False)
+    module = Bmap.objects.create(module_name=module_name, image=image, purpose=purpose, create_time=create_time,
+                              modify_time=modify_time,is_active=is_active)
+    module.save()
+    return HttpResponse({'result': 'success'})
+
+def query_module(request):
+
+    modules=Module.objects.all()
+    d_modules = {}
+    for i in range(len(modules)):
+        d_modules[i] = model_to_dict(modules[i])
+    return render(request,'query_module.html',{'d_modules': json.dumps(d_modules, cls=DjangoJSONEncoder)})

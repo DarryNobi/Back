@@ -30,6 +30,14 @@ urlpatterns = [
 
     url(r'^deliver_map/', views.deliver_map),
     url(r'^upload_map/', views.upload_map),
+    url(r'^query_map/', views.query_map),
+    url(r'^_download_map/', views._download_map),
     url(r'^_upload_map/', views._upload_map),
+    url(r'^_download_map/', views._download_map),
+    url(r'^_delete_map/', views._delete_map),
+
+    url(r'^add_module/', views.add_module),
+    url(r'^_add_module/', views._add_module),
+    url(r'^query_module/', views.query_module),
 
 ]

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% load staticfiles %}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>账号查询（Bootstrap）</title>
+<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.1/css/bootstrap-theme.min.css">
+<!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+
+<![endif]-->
+<style>
+.bs-docs-home
+{
+	background-color: #ffffff;
+	background-image: url(line.png);
+}
+table {
+
+}
+select{
+font-size:25px;
+}
+</style>
+</head>
+<body class="bs-docs-home">
+	<!--<div class="container theme-showcase">-->
+	<div>
+		<h1 style=" line-height:2em;"></h1><br/>
+		<div class="row">
+			<!--<div class="col-sm-3"></div>-->
+			<div class="col-sm-2"></div>
+			<!--<div class="col-sm-6">-->
+			<div class="col-sm-6" style="width:100%;">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<!--<h3 class="panel-title"><strong>账号查询</strong></h3>-->
+					<h2><strong>账号查询</strong></h2>
+				</div>
+				<div class="panel-body">
+					<form action="/account_inquiry/" method="post" role="form" name="form1">
+						{% csrf_token %}
+						<div class="form-group">
+							<label for="username"><h3>请输入查询信息</h3></label>
+                            <div class="input-group">
+                                <input style="size: 6;width:250px;height:50px;" type="text" class="form-control" id="message" name="message" placeholder="请输入账号" >
+                                <button   type="submit" ><h4>查询</h4></button>
+                            </div>
+						</div>
+					</form>
+
+					<div class="table-responsive">
+						<table id="resultTab" style="height:40px;" border="0" cellspacing="0" cellpadding="0" class="table">
+						<tr class=" label-primary">
+							<th scope="col" width="10%" ><span style="color:white"><h4>序号</h4></span></th>
+							<th scope="col" width="10%" ><span style="color:white"><h4>模块名称</h4></span></th>
+							<th scope="col" width="10%" ><span style="color:white"><h4>图标</h4></span></th>
+							<th scope="col" width="10%" ><span style="color:white"><h4>用途</h4></span></th>
+							<th scope="col" width="10%" ><span style="color:white"><h4>创建时间</h4></span></th>
+							<th scope="col" width="10%" ><span style="color:white"><h4>修改时间</h4></span></th>
+							<th scope="col" width="10%" ><span style="color:white"><h4>状态</h4></span></th>
+							<th scope="col" width="10%" ><span style="color:white"><h4>操作</h4></span></th>
+						</tr>
+						</table>
+						<p>{{message1}}</p>
+						</div>
+				</div>
+			</div>
+			</div>
+			<div class="col-sm-3"></div>
+		</div>
+	</div>
+
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.1/js/bootstrap.min.js"></script>
+
+    <script>
+    var d_modules={{ d_modules|safe }}
+    </script>
+ <script src="{% static 'js/query_modules.js' %}"></script>
+</body>
+</html>
