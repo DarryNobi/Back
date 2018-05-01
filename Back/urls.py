@@ -21,12 +21,15 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    url(r'^index/', views.index),
+
     url(r'^account_inquiry/', views.account_inquiry),
     url(r'^account_Inquiry/', views.account_Inquiry),
+    url(r'^add_Account/', views.add_Account),
+
+    url(r'^deliver_map/', views.deliver_map),
     url(r'^upload_map/', views.upload_map),
     url(r'^_upload_map/', views._upload_map),
-    url(r'^add_Account/', views.add_Account),
-    url(r'^add_usr/', views.add_usr),
-    url(r'^deliver_map/', views.deliver_map),
 
 ]
