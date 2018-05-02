@@ -30,135 +30,171 @@
 	        text-align:center;
 	        line-height:80px;
         }
+        .nav-second-level {
+            background: #35425d;
+        }
+        .container {
+            padding:0;
+        }
+        .row {
+            margin:0;
+        }
+        #context_container {
+            width:98%;
+            height:95%;
+            margin-top:15px;
+            border-radius:10px;
+            margin-left:15px;
+        }
 </style>
 </head>
 
 <body>
-    <div id="wrapper">
-        <div id="container">
-		    <img src="u3.png" alt="iotek">
-		    <font size="6"><b>天津未来科技城卫星遥感资源管理系统</b></font>
+    <div id="wrapper" style="height:100%">
+        <div id="container" class="container" style="height:10%; min-height:88px; width: 100%">
+		    <div class="row" style="height:100%">
+                <div class="col-lg-2" style="padding:0; height:100%">
+                    <img style="height:50%" src="{% static 'img/spaceflight.png' %}">
+                </div>
+                <div class="col-lg-10" style="padding:0; background:#ffffff; display:flex; height:100%">
+                    <span style="width:75%; text-align:left; padding-left:30px;"><font size="6"><b>天津未来科技城卫星遥感资源管理系统</b></font></span>
+                    <span style="width:25%; height:100%; font-size:16px; text-align:end; margin-right:20px;">
+                        <img style="height:50%" src="{% static 'img/user_logo.png' %}">
+                        <a id="login" href="/login/" title="Login"><em class="glyphicon glyphicon-plus"></em>登录</a>
+                        <span id="user_name" style="padding-left:10px"></span>
+                        <a id="logout" href="/logout/" class="" title="Logout"><em class="glyphicon glyphicon-home"></em>登出</a>
+                    </span>
+                </div>
+            </div>
 	    </div>
-        <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">遥感图像处理平台</a>
-            </div>
+        <!--<nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">-->
+            <!--<div class="navbar-header">-->
+                <!--<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">-->
+                    <!--<span class="sr-only">Toggle navigation</span>-->
+                    <!--<span class="icon-bar"></span>-->
+                    <!--<span class="icon-bar"></span>-->
+                    <!--<span class="icon-bar"></span>-->
+                <!--</button>-->
+                <!--<a class="navbar-brand" href="index.html">遥感图像处理平台</a>-->
+            <!--</div>-->
 
-            <div class="header-right">
-				<a href="../cpts_645_bhc/login.html" class="btn btn-primary" title="Logout"><em class="glyphicon glyphicon-search"></em>搜索</a>
-				<a href="/logout/" class="btn btn-warning dropdown-toggle" title="Logout"><em class="glyphicon glyphicon-home"></em>登出</a>
-				<a href="/login/" class="btn btn-danger" title="Logout"><em class="glyphicon glyphicon-plus"></em>登录</a>
-				<div class="btn-group">
-                                        <button class="btn btn-success">更多</button>
-                                        <button data-toggle="dropdown" class="btn btn-success dropdown-toggle"><span class="caret"></span></button>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="#">123</a></li>
-                                            <li><a href="#">456</a></li>
-                                            <li><a href="#">789</a></li>
-                                            <li class="divider"></li>
-                                            <li><a href="#">Separated link</a></li>
-                                        </ul>
-                                    </div>
-			</div>
-        </nav>
+            <!--<div class="header-right">-->
+				<!--<a href="../cpts_645_bhc/login.html" class="btn btn-primary" title="Logout"><em class="glyphicon glyphicon-search"></em>搜索</a>-->
+				<!--<a href="/logout/" class="btn btn-warning dropdown-toggle" title="Logout"><em class="glyphicon glyphicon-home"></em>登出</a>-->
+				<!--<a href="/login/" class="btn btn-danger" title="Logout"><em class="glyphicon glyphicon-plus"></em>登录</a>-->
+				<!--<div class="btn-group">-->
+                                        <!--<button class="btn btn-success">更多</button>-->
+                                        <!--<button data-toggle="dropdown" class="btn btn-success dropdown-toggle"><span class="caret"></span></button>-->
+                                        <!--<ul class="dropdown-menu">-->
+                                            <!--<li><a href="#">123</a></li>-->
+                                            <!--<li><a href="#">456</a></li>-->
+                                            <!--<li><a href="#">789</a></li>-->
+                                            <!--<li class="divider"></li>-->
+                                            <!--<li><a href="#">Separated link</a></li>-->
+                                        <!--</ul>-->
+                                    <!--</div>-->
+			<!--</div>-->
+        <!--</nav>-->
         <!-- /. NAV TOP  -->
-        <nav class="navbar-default navbar-side " role="navigation">
-            <div class="sidebar-collapse">
-                <ul class="nav" id="main-menu">
-                    <li>
-                        <a id="home" class="active-menu" href="javascript:void(0)" onclick="open_link('/home/');" ><i class="fa fa-dashboard "></i>首页</a>
-                    </li>
+        <div class="container" style="width:100%; height:90%">
+            <div class="row" style="width:100%; height:100%; margin:0">
+                <div class="col-lg-2 col-xs-2" style="height:100%; padding:0">
+                    <nav class="navbar-default navbar-side " role="navigation" style="height:100%; width:100%; background: #66759b;">
+                        <div class="sidebar-collapse" style="height:100%;">
+                            <ul class="nav" id="main-menu" style="height:100%;">
+                                <li class="menu-li">
+                                    <a id="home" class="active-menu menu-a" href="javascript:void(0)" onclick="open_link('/home/');" ><i class="fa fa-dashboard "></i>首页</a>
+                                </li>
 
-                    <li><a href="#"><i class="fa fa-desktop "></i>用户管理<span class="fa arrow"></span></a>
-                      <ul class="nav nav-second-level">
-                            <li>
-                              <a href="javascript:void(0)" onclick="open_link('/account_show/');" ><i class="fa fa-toggle-on">用户查询</i></a>
-                              </li>
-                            <li> <a href="javascript:void(0)" onclick="open_link('/add_Account/');"><i class="fa fa-toggle-on"></i>新增用户</a> </li>
+                                <li class="menu-li"><a class="menu-a" href="#"><i class="fa fa-desktop "></i>用户管理<span class="fa arrow"></span></a>
+                                  <ul class="nav nav-second-level">
+                                        <li>
+                                          <a href="javascript:void(0)" onclick="open_link('/account_show/');" ><i class="fa fa-toggle-on">用户查询</i></a>
+                                          </li>
+                                        <li> <a href="javascript:void(0)" onclick="open_link('/add_Account/');"><i class="fa fa-toggle-on"></i>新增用户</a> </li>
 
-                        </ul>
-                    </li>
+                                    </ul>
+                                </li>
 
-                     <li><a href="#"><i class="fa fa-yelp "></i>权限管理<span class="fa arrow"></span></a>
-                       <ul class="nav nav-second-level">
-                            <li>
-                                <a  href="javascript:void(0)" onclick="open_link('/_account_show/');"><i class="fa fa-flash "></i>权限查询</a>
-                            </li>
+                                 <li class="menu-li"><a class="menu-a" href="#"><i class="fa fa-yelp "></i>权限管理<span class="fa arrow"></span></a>
+                                   <ul class="nav nav-second-level">
+                                        <li>
+                                            <a  href="javascript:void(0)" onclick="open_link('/_account_show/');"><i class="fa fa-flash "></i>权限查询</a>
+                                        </li>
 
-                        </ul>
-                    </li>
+                                    </ul>
+                                </li>
 
-                    <li>
-                        <a href="#"><i class="fa fa-yelp "></i>模块管理<span class="fa arrow"></span></a>
-                         <ul class="nav nav-second-level">
-                            <li>
-                                <a href="javascript:void(0)" onclick="open_link('/query_module/')" ><i class="fa fa-coffee"></i>模块查询</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)" onclick="open_link('/add_module/')"></i>新增模块</a>
-                            </li>
-                        </ul>
-                    </li>
+                                <li class="menu-li">
+                                    <a class="menu-a" href="#"><i class="fa fa-yelp "></i>模块管理<span class="fa arrow"></span></a>
+                                     <ul class="nav nav-second-level">
+                                        <li>
+                                            <a href="javascript:void(0)" onclick="open_link('/query_module/')" ><i class="fa fa-coffee"></i>模块查询</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" onclick="open_link('/add_module/')"></i>新增模块</a>
+                                        </li>
+                                    </ul>
+                                </li>
 
-                    <li>
-                        <a href="#"><i class="fa fa-yelp "></i>图斑管理<span class="fa arrow"></span></a>
-                         <ul class="nav nav-second-level">
-                            <li>
-                                <a href="panel-tabs.html"><i class="fa fa-toggle-on"></i>图斑查询</a>
-                            </li>
-                            <li>
-                                <a href="notification.html"><i class="fa fa-bell "></i>图斑上传</a>
-                            </li>
-                        </ul>
-                    </li>
+                                <li class="menu-li">
+                                    <a class="menu-a" href="#"><i class="fa fa-yelp "></i>图斑管理<span class="fa arrow"></span></a>
+                                     <ul class="nav nav-second-level">
+                                        <li>
+                                            <a href="panel-tabs.html"><i class="fa fa-toggle-on"></i>图斑查询</a>
+                                        </li>
+                                        <li>
+                                            <a href="notification.html"><i class="fa fa-bell "></i>图斑上传</a>
+                                        </li>
+                                    </ul>
+                                </li>
 
-                     <li>
-                        <a href="#"><i class="fa fa-yelp "></i>资源管理<span class="fa arrow"></span></a>
-                         <ul class="nav nav-second-level">
-                            <li>
-                                <a href="javascript:void(0)" onclick="open_link('/query_map/');"><i class="fa fa-toggle-on"></i>资源查询</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)" onclick="open_link('/upload_map/');"> <i class="fa fa-bell "></i>资源上传</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-yelp "></i>个人中心<span class="fa arrow"></span></a>
-                         <ul class="nav nav-second-level">
-                            <li>
-                                <a href="javascript:void(0)" onclick="open_link('/sinfo_revise/');"><i class="fa fa-toggle-on"></i>个人信息</a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)" onclick="open_link('/password_revise/');"><i class="fa fa-bell "></i>密码重置</a>
-                            </li>
-                        </ul>
-                    </li>
+                                 <li class="menu-li">
+                                    <a class="menu-a" href="#"><i class="fa fa-yelp "></i>资源管理<span class="fa arrow"></span></a>
+                                     <ul class="nav nav-second-level">
+                                        <li>
+                                            <a href="javascript:void(0)" onclick="open_link('/query_map/');"><i class="fa fa-toggle-on"></i>资源查询</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" onclick="open_link('/upload_map/');"> <i class="fa fa-bell "></i>资源上传</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="menu-li">
+                                    <a class="menu-a" href="#"><i class="fa fa-yelp "></i>个人中心<span class="fa arrow"></span></a>
+                                     <ul class="nav nav-second-level">
+                                        <li>
+                                            <a href="javascript:void(0)" onclick="open_link('/sinfo_revise/');"><i class="fa fa-toggle-on"></i>个人信息</a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0)" onclick="open_link('/password_revise/');"><i class="fa fa-bell "></i>密码重置</a>
+                                        </li>
+                                    </ul>
+                                </li>
 
 
-                </ul>
+                            </ul>
 
-            </div>
+                        </div>
 
-        </nav>
-        <!-- /. NAV SIDE  -->
-        <style>
-            html,body,#map{
-            padding:0;
-            margin:0;
-            height:0;
-            }
-        </style>
-        <div id="page-wrapper" style="margin:0 0 0 260px">
-            <div>
-                <iframe id="context_container"  frameborder="0" scrolling="no" style="width: 100%; height: 1110px;">
-                </iframe>
+                    </nav>
+                </div>
+                    <!-- /. NAV SIDE  -->
+                    <style>
+                        html,body,#map{
+                        padding:0;
+                        margin:0;
+                        height:100%;
+                        }
+                    </style>
+                <div class="col-lg-10 col-xs-10" style="padding:0; height:100%">
+                    <div id="page-wrapper" style="background:#e0e4e7; height:100%">
+                        <div style="height:100%">
+                            <iframe id="context_container"  frameborder="0" scrolling="no">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- /. PAGE WRAPPER  -->

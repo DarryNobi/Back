@@ -8,8 +8,14 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <title>账号查询（Bootstrap）</title>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
 <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.1/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="{% static 'css/bootstrap-table.min.css' %}">
+<script src="{% static 'js/bootstrap-table.js' %}"></script>
+<script src="{% static 'js/bootstrap-table.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-table-locale-all.min.js' %}"></script>
 <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -25,9 +31,6 @@
 table {
 
 }
-select{
-font-size:25px;
-}
 </style>
 </head>
 <body class="bs-docs-home">
@@ -42,66 +45,136 @@ font-size:25px;
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<!--<h3 class="panel-title"><strong>账号查询</strong></h3>-->
-					<h2><strong>账号查询</strong></h2>
+					<h4><strong>账号查询</strong></h4>
 				</div>
-				<div class="panel-body">
-					<form action="/account_inquiry/" method="post" role="form" name="form1">
-						{% csrf_token %}
-
-		<div class="form-group has-feedback">
-                <label for="querymethod"><h3>选择查询方式</h3></label>
-                <div class="input-group",name="input-group">
-                    <select style="size: 6;width:250px;height:50px;" name="query_method">
-                        <option value='1' name="ibuild">用户名</option>
-                        <option value='2' name="agriculture">单位名</option>
-                        <option value='3' name="forest">手机号</option>
-                        <option value='4' name="road">联系人</option>
-                    </select>
-                </div>
-            </div>
-						<div class="form-group">
-							<label for="username"><h3>请输入查询信息</h3></label>
-						<div class="input-group"> 
-							<input style="size: 6;width:250px;height:50px;" type="text" class="form-control" id="message" name="message" placeholder="请输入账号" >
-							<button   type="submit" ><h4>查询</h4></button>
-
-						</div> 
-						</div> 
-					</form>
-
+				<div class="panel-body" style="padding:0;">
 					<div class="table-responsive">
-						<table id="resultTab" style="height:40px;" border="0" cellspacing="0" cellpadding="0" class="table">
-						<tr class=" label-primary">
-							<th scope="col" width="10%" ><span style="color:white"><h4>序号</h4></span></th>
-							<th scope="col" width="10%" ><span style="color:white"><h4>用户名</h4></span></th>
-							<th scope="col" width="10%" ><span style="color:white"><h4>单位名称</h4></span></th>
-							<th scope="col" width="10%" ><span style="color:white"><h4>联系电话</h4></span></th>
-							<th scope="col" width="10%" ><span style="color:white"><h4>联系人</h4></span></th>
-							<th scope="col" width="10%" ><span style="color:white"><h4>用户类型</h4></span></th>
-							<th scope="col" width="10%" ><span style="color:white"><h4>状态</h4></span></th>
-							<th scope="col" width="10%" ><span style="color:white"><h4>权限 </h4></span></th>
-							<th scope="col" width="10%" ><span style="color:white"><h4>操作</h4></span></th>
+						<table id="resultTab" style="width:98%;" border="0" cellspacing="0" cellpadding="0" class="table">
+						<tr class=" label-primary" style="background:#dde3ef;">
 						</tr>
 						</table>
 						<p>{{message1}}</p>
-						</div>
+					</div>
 				</div> 
 			</div> 
 			</div> 
 			<div class="col-sm-3"></div>
 		</div>
 	</div>
-
-<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.1/js/bootstrap.min.js"></script>
     <script>
-    var d_users={{ d_users|safe }}
-</script>
+    	var d_users={{ d_users|safe }};
+    	var data=[];
+		for(var i in d_users){
+
+		data.push(d_users[i])
+
+		}
+
+		window.onload=function(){
+			//默认获取当前日期
+			showList();
+		};
+		function showList(){
+
+			var resultTab = $("#resultTab");
+			var pubText="";
+		//    data.forEach(function(item){
+		//     if(item.is_active)
+		//          pubText="正常";
+		//        else
+		//          pubText="禁用"
+		//        $(
+		//            '<tr/>', {
+		//                'style' : 'font-size:18px'
+		//            }).append($('<td/>', {
+		//                text : item.id
+		//            }))
+		//            .append($('<td/>',{
+		//                text : item.username
+		//            }))
+		//            .append($('<td/>',{
+		//                text : item.enterprise_name
+		//            }))
+		//            .append($('<td/>',{
+		//                text : item.phone
+		//            }))
+		//            .append($('<td/>',{
+		//                text : item.contact_usr
+		//            }))
+		//            .append($('<td/>',{
+		//                text : item.usr_type
+		//            }))
+		//            .append($('<td/>',{
+		//                text : pubText
+		//            }))
+		//             .append($('<td/>',{
+		//                text : item.user_permissions
+		//            }))
+		//            .append($('<td/>')
+		//            .append($('<p/>')
+		//            .append($('<button/>',{
+		//                'class' : 'operate',
+		//                'id' : 'modify' + item.id,
+		//                text : '修改'
+		//            }))
+		//            ))
+		//            .appendTo(resultTab);
+		//
+		//        button_modify=$("#modify"+ item.id);
+		//        button_modify.on("click",{"username":item.username},modify_information);
+		//    });
+			  $("#resultTab").bootstrapTable({
+				  locale:'zh-CN',//中文支持
+				  pagination: true,//是否开启分页（*）
+				  pageNumber:1,//初始化加载第一页，默认第一页
+				  pageSize: 3,//每页的记录行数（*）
+				  pageList: [10, 25, 50, 100],//可供选择的每页的行数（*）
+				  sidePagination: "client", //分页方式：client客户端分页，server服务端分页（*）
+				  showRefresh:true,//刷新按钮
+				  search: true,
+				  data:data,
+				  columns: [
+					  {field: 'id', title:'序号'},
+					  {field: 'username', title:'用户名'},
+					  {field: 'enterprise_name', title:'单位名称'},
+					  {field: 'phone', title:'联系电话'},
+					  {field: 'contact_usr', title:'联系人'},
+					  {field: 'usr_type', title:'用户类型'},
+					  {field: 'tool', title:'状态',
+					  	  formatter:function(value,row,index){
+					  	  		  var pubText='';
+					  	  	      if (row.is_active) {
+					  	  	          pubText='正常';
+					  	  	      } else {
+					  	  	      	  pubText='禁用';
+					  	  	      }
+					  	  	      return pubText;
+							  }
+					  },
+					  {field: 'user_permissions', title:'权限'},
+					  {field: 'tool',title: '操作', align: 'center',
+						  formatter:function(value,row,index){
+						  	  var data = row;
+							  var element = "<button class='operate' id='modify"+row.id +"' data-id='"+row.id +"' onclick='modify_information(data)'>修改</button>";
+							  return element;
+						  }
+					  }
+				  ],
+
+			  })
+		};
+		function modify_information(data) {
+			var username=data.username;
+			alert(username);
+			location.href="/info_revise/?txt="+username;//发送txt里面的内容
+		}
+
+	</script>
     <script >
         $.ajaxSetup({
          data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
         });
   </script>
- <script src="{% static 'js/account_inquiry.js' %}"></script>
+ <!--<script src="{% static 'js/account_inquiry.js' %}"></script>-->
 </body>
 </html>
