@@ -22,6 +22,9 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse, JsonResponse
 User = get_user_model()
 
+
+MAPBASEPATH='/home/zhou/PycharmProjects/Back/Maps/'
+
 # Create your views here.
 
 def index(request):
@@ -153,7 +156,6 @@ def deliver_map(request):
     else:
       return HttpResponse(json.dumps({'d_maps': ''}))
 
-MAPBASEPATH='/home/zhou/PycharmProjects/Back/Maps/'
 def _download_map(request):
     mapid=request.GET.get("id",False)
     if mapid:
@@ -197,7 +199,6 @@ def query_module(request):
     for i in range(len(modules)):
         d_modules[i] = model_to_dict(modules[i])
     return render(request,'query_module.html',{'d_modules': json.dumps(d_modules, cls=DjangoJSONEncoder)})
-      return HttpResponse(json.dumps({'message': '查找结果为空！'}))
 
 def fuzzy_search(message):
     list1=[]
