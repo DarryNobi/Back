@@ -43,9 +43,10 @@ urlpatterns = [
     url(r'^_sinfo_revise/', views._sinfo_revise),
     url(r'^_download_map/', views._download_map),
     url(r'^_delete_map/', views._delete_map),
-
+    url(r'^_delete_module/', views._delete_module),
     url(r'^add_module/', views.add_module),
     url(r'^_add_module/', views._add_module),
+    url(r'^login/', views.login),
     url(r'^query_module/', views.query_module),
 
 ]

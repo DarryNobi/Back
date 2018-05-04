@@ -142,13 +142,13 @@ $().ready(function() {
 <body>
 <div class="container">
     <div class="col-md-8 col-md-offset-2">
-        <form action="/_upload_map/" class="" method="post" id="upload_map_form">
+        <form action="/_add_module/"  method="post" id="upload_map_form">
  {% csrf_token %}
             <div class="form-group has-feedback">
                 <label for="userNum"><h4>模块名称</h4></label>
                 <div class="input-group">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                    <input id="map_name" name="map_name" class="form-control" placeholder="请输入模块名称" maxlength="20" type="text">
+                    <input id="module_name" name="module_name" class="form-control" placeholder="请输入模块名称" maxlength="20" type="text">
                 </div>
             </div>
 
@@ -156,7 +156,7 @@ $().ready(function() {
                 <label for="password"><h4>用途</h4></label>
                 <div class="input-group">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                    <input id="desc" name="desc" class="form-control" placeholder="请输入模块用途" maxlength="20" type="text">
+                    <input id="purpose" name="purpose" class="form-control" placeholder="请输入模块用途" maxlength="20" type="text">
                 </div>
 
             </div>
@@ -166,14 +166,14 @@ $().ready(function() {
                 <div class="input-group">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
                     <input id="thumbnail_text" class="form-control"  maxlength="20" type="text">
-                    <input id="thumbnail" name="thumbnail" class="form-control" maxlength="20" type="file">
+                    <input id="image" name="image" class="form-control" maxlength="20" type="file">
                 </div>
             </div>
 
             <div class="form-group has-feedback">
                 <label for="department"><h4>状态</h4></label>
                 <div class="input-group",name="input-group">
-                    <select style="size: 6;" name="satelite">
+                    <select style="size: 6;" name="is_active">
                         <option value="正常" name="ibuild">正常</option>
                         <option value="禁用" name="agriculture">禁用</option>
                     </select>
@@ -181,7 +181,7 @@ $().ready(function() {
             </div>
 
             <div class="form-group">
-                <input style="height:50px;" value="上传" id="reset" class="form-control btn btn-danger" type="reset">
+                <input style="height:50px;" value="上传" id="reset" class="form-control btn btn-danger" type="submit">
             </div>
 
         </form>
