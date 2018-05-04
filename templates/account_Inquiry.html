@@ -125,6 +125,8 @@ table {
 		//    });
 
 
+
+
 			  $("#resultTab").bootstrapTable({
 				  locale:'zh-CN',//中文支持
 				  pagination: true,//是否开启分页（*）
@@ -156,14 +158,9 @@ table {
 					  {field: 'user_permissions', title:'权限'},
 					  {field: 'tool',title: '操作', align: 'center',
 						  	  formatter: function (value,row,index){
-						  	      var element = "<button class='operate' id='modify"+row.id +"' data-id='"+row.id +"' onclick='modify_information("+row.username+")')'>修改</button>";
+						  	      var element = "<button class='operate' id='modify"+row.id +"' data-id='"+row.id +"' onclick='modify_information(\""+row+"\")'>修改</button>";
 								  return element;
 						  	  },
-						  	  <!--events: {-->
-                            		<!--'click .operate': function (e, value, row, index) {-->
-									<!--//删除操作-->
-									<!--alert(row.id);-->
-                            	<!--}-->
 
 					  }
 				  ],
@@ -176,7 +173,6 @@ table {
 			alert(username);
 			location.href="/info_revise/?txt="+data;//发送txt里面的内容
 		}
-
 
 	</script>
     <script >
