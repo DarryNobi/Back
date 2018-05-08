@@ -8,6 +8,11 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <title>账号查询（Bootstrap）</title>
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.js' %}"></script>
+<script src="{% static 'js/bootstrap-table.min.js' %}"></script>
+<script src="{% static 'js/bootstrap-table-locale-all.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/bootstrap-table.min.css' %}">
 <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.1/css/bootstrap-theme.min.css">
 <!--[if lt IE 9]><script src="../../docs-assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -45,41 +50,17 @@ font-size:25px;
 					<h2><strong>账号查询</strong></h2>
 				</div>
 				<div class="panel-body">
-					<form action="/account_inquiry/" method="post" role="form" name="form1">
-						{% csrf_token %}
-						<div class="form-group">
-							<label for="username"><h3>请输入查询信息</h3></label>
-                            <div class="input-group">
-                                <input style="size: 6;width:250px;height:50px;" type="text" class="form-control" id="message" name="message" placeholder="请输入账号" >
-                                <button   type="submit" ><h4>查询</h4></button>
-                            </div>
-						</div>
-					</form>
-
 					<div class="table-responsive">
-						<table id="resultTab" style="height:40px;" border="0" cellspacing="0" cellpadding="0" class="table">
-						<tr class=" label-primary">
-							<th scope="col" width="10%" ><span style="color:white"><h4>序号</h4></span></th>
-							<th scope="col" width="10%" ><span style="color:white"><h4>模块名称</h4></span></th>
-							<th scope="col" width="10%" ><span style="color:white"><h4>图标</h4></span></th>
-							<th scope="col" width="10%" ><span style="color:white"><h4>用途</h4></span></th>
-							<th scope="col" width="10%" ><span style="color:white"><h4>创建时间</h4></span></th>
-							<th scope="col" width="10%" ><span style="color:white"><h4>修改时间</h4></span></th>
-							<th scope="col" width="10%" ><span style="color:white"><h4>状态</h4></span></th>
-							<th scope="col" width="10%" ><span style="color:white"><h4>操作</h4></span></th>
-						</tr>
+						<table id="module_tab" style="height:40px;" border="0" cellspacing="0" cellpadding="0" class="table">
 						</table>
 						<p>{{message1}}</p>
-						</div>
+					</div>
 				</div>
 			</div>
 			</div>
 			<div class="col-sm-3"></div>
 		</div>
 	</div>
-
-<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
-<script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.1/js/bootstrap.min.js"></script>
 
     <script>
     var d_modules={{ d_modules|safe }}

@@ -16,7 +16,7 @@ from myweb.models import Bmap
 import json
 from django.core import serializers
 from django.http import FileResponse
-
+from django.utils import timezone
 from django.forms.models import model_to_dict
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse, JsonResponse
@@ -177,6 +177,15 @@ def _delete_map(request):
     else:
         return JsonResponse({'result':'error'})
 
+def _delete_module(request):
+        moduleid = request.GET.get("id", False)
+        if moduleid:
+            module = Module.objects.get(id=moduleid)
+            module.delete()
+            return JsonResponse({'result': 'success'})
+        else:
+            return JsonResponse({'result': 'error'})
+
 def add_module(request):
     return render(request,'add_module.html')
 
@@ -184,13 +193,12 @@ def _add_module(request):
     module_name = request.POST.get("module_name", False)
     image = request.POST.get("image", False)
     purpose = request.POST.get("purpose", False)
-    create_time = request.POST.get("create_time", False)
-    modify_time = request.POST.get("modify_time", False)
+    modify_time=timezone.now()
     is_active = request.POST.get("is_active", False)
-    module = Bmap.objects.create(module_name=module_name, image=image, purpose=purpose, create_time=create_time,
-                              modify_time=modify_time,is_active=is_active)
+    module = Module.objects.create(module_name=module_name, image=image, purpose=purpose,modify_time=modify_time,
+                             is_active=is_active)
     module.save()
-    return HttpResponse({'result': 'success'})
+    return render(request, 'add_module.html', {'message': "success"})
 
 def query_module(request):
 
@@ -218,6 +226,9 @@ def info_revise(request):
 
 def sinfo_revise(request):
     return render(request, template_name='sinfo_revise.html')
+
+def login(request):
+    return render(request, template_name='login.html')
 
 
 def _info_revise(request):
@@ -279,8 +290,8 @@ def permission_revise(request):
     for j in range(len(user['user_permissions'])):
         tmp = user['user_permissions'][j].name
         user_permissions.append(tmp)
-
-    return HttpResponse(json.dumps({"new_permissions":user_permissions}))
+    user['user_permissions'] = user_permissions
+    return HttpResponse(json.dumps({"user":user},cls=DjangoJSONEncoder))
 
 def password_reset(request):
     old_password = request.POST.get("old_password",False)

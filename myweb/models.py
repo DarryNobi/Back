@@ -39,7 +39,7 @@ class Module(models.Model):
     purpose=models.CharField(max_length=20,blank=True)
     create_time=models.DateTimeField(blank=True,default=timezone.now)
     modify_time=models.DateTimeField(blank=True)
-    is_active=models.BooleanField(default=True,blank=True)
+    is_active=models.CharField(max_length=40,blank=True)
 
 
 class Bmap(models.Model):
