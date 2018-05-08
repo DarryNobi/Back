@@ -51,3 +51,4 @@ class Bmap(models.Model):
     thumbnail_path=models.CharField(max_length=50,blank=True)
     wholemap_path=models.CharField(max_length=50,blank=True)
     status=models.BooleanField(default=True,blank=True)
+    imagry_type=models.CharField(max_length=20,default='二级影像',blank=True)

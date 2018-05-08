@@ -28,7 +28,12 @@ function showList(){
               columns: [
                   {field: 'id', title:'序号', width:'8%', align:'center'},
                   {field: 'module_name', title:'模块名称', width:'8%', align:'center'},
-                  {field: 'image', title:'图标', width:'8%', align:'center'},
+                  {field: 'image', title:'图标', width:'8%', align:'center',
+                  formatter: function (value,row,index){
+                              var data = row;
+                              var element = "<img src='static/img/>
+                              return element;
+                              },
                   {field: 'purpose', title:'用途', width:'15%', align:'center'},
                   {field: 'create_time', title:'创建时间', width:'15%', align:'center'},
                   {field: 'modify_time', title:'修改时间', width:'15%', align:'center'},

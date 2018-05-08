@@ -48,5 +48,9 @@ urlpatterns = [
     url(r'^_add_module/', views._add_module),
     url(r'^login/', views.login),
     url(r'^query_module/', views.query_module),
-
+    url(r'^login_check/', views.login_check),
+    url(r'^_add_superuser/', views._add_superuser),
+    url(r'^add_superuser/', views.add_superuser),
+    url(r'^logout/', views.mylogout),
+    url(r'^check_username/', views.check_username),
 ]

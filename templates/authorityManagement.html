@@ -71,13 +71,14 @@ table {
         </div>
     </div>
     <script>
-        var d_users={{ d_users|safe }}
+
     </script>
 
     <script >
          $.ajaxSetup({
              data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
          });
+          var d_users={{ d_users|safe }};
     </script>
     <script src="{% static 'js/authority_management.js' %}"></script>
 </body>

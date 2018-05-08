@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <head>
+    {% load staticfiles %}
 <meta charset="utf-8">
 <title>修改个人信息</title>
 <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
@@ -97,6 +98,7 @@
                     <input id="enterprise_name" name="enterprise_name" class="form-control" placeholder="请输入单位名称" maxlength="20" type="text">
                 </div>
             </div>
+
             <div class="form-group has-feedback">
                 <label for="phoneNum"><h4>联系人电话</h4></label>
                 <div class="input-group">
@@ -120,5 +122,9 @@
         <p>{{message}}<p>
     </div>
 </div>
+<script>
+    var user={{user|safe}};
+</script>
+<script src="{% static 'js/return_selfimformation.js' %}"></script>
 </body>
 </html>

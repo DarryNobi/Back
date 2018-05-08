@@ -17,11 +17,11 @@
 <script>
 $().ready(function() {
 // 在键盘按下并释放及提交后验证提交表单
-  $("#add_usr_form").validate({
+  $("#add_account_form").validate({
     rules: {
       username: {
         required: true,
-        minlength: 6,
+        minlength: 2,
         remote:{
 
                     type:"POST",
@@ -33,31 +33,41 @@ $().ready(function() {
                 }
 
       },
+      password1: {
+        required: true,
+        minlength: 8
+      },
+      password2: {
+        required: true,
+        minlength: 8,
+        equalTo: "#password1"
+      },
        phone:{
 	      minlength: 11,
           maxlength: 11,
           digits:true
-	      },
-	   contact_usr:{
-	      required:true
 	      }
-
 
     },
      messages: {
 	    	username: {
 	        required: "请输入用户名",
-	        minlength: "用户名至少6位",
+	        minlength: "用户名至少8位",
 	        remote: "用户名已存在"
 	      },
+	      password1: {
+	          required: "请输入密码",
+	          minlength: "密码长度至少8位"
+	        },
+	        password2: {
+	          required: "请输入密码",
+	          minlength: "密码长度不能小于8位",
+	          equalTo: "两次密码输入不一致"
+	        },
 	        phone:{
 	        maxlength:"手机号格式错误",
 	        minlength:"手机号格式错误",
 	        digits:"手机号格式错误"
-	        },
-	        contact_usr:{
-	        required:"请输入联系人"
-
 	        }
 	    }
     })
@@ -135,7 +145,7 @@ $().ready(function() {
 
 <div class="container">
     <div class="col-md-8 col-md-offset-2">
-        <form action="/add_usr/" class="" method="post" id="add_usr_form">
+        <form action="/_add_superuser/" class="" method="post" id="add_usr_form">
  {% csrf_token %}
             <div class="form-group has-feedback">
                 <label for="userNum"><h4>用户名</h4></label>
@@ -143,7 +153,18 @@ $().ready(function() {
                     <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
                     <input id="username" name="username" class="form-control" placeholder="请输入账号" maxlength="20" type="text">
                 </div>
-
+  <div class="form-group has-feedback">
+                <label for="username"><h4>密码</h4></label>
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                    <input id="password1" name="password1" class="form-control" placeholder="请输入密码" maxlength="20" type="password">
+                </div>
+        <div class="form-group has-feedback">
+                <label for="username"><h4>确认密码</h4></label>
+                <div class="input-group">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                    <input id="password2" name="password2" class="form-control" placeholder="请再次输入密码" maxlength="20" type="password">
+                </div>
 
             </div>
 
@@ -153,8 +174,6 @@ $().ready(function() {
                     <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
                     <input id="enterprise_name" name="enterprise_name" class="form-control" placeholder="请输入单位名称" maxlength="20" type="text">
                 </div>
-
-
             </div>
 
 
@@ -179,28 +198,6 @@ $().ready(function() {
 
             </div>
 
-            <div class="form-group has-feedback">
-                <label for="department"><h4>用户类型</h4></label>
-                <div class="input-group",name="input-group">
-                    <select style="size: 6;" name="user_type">
-                        <option value="市政部门" name="ibuild" >市政部门</option>
-                        <option value="农业公司" name="agriculture">农业公司</option>
-                        <option value="林业公司" name="forest">林业公司</option>
-                        <option value="建筑公司" name="road">建筑公司</option>
-                    </select>
-                </div>
-            </div>
-                 <div class="form-group has-feedback">
-                <label for="department"><h4>添加权限</h4></label>
-                <div class="input-group",name="input-group">
-                    <input type="checkbox" name="check_box" value="1">城市管理</input>
-                    <input type="checkbox" name="check_box" value="2">农业管理</input>
-                    <input type="checkbox" name="check_box" value="3">林业管理</input>
-                    <input type="checkbox" name="check_box" value="4">道路管理</input>
-                    <input type="checkbox" name="check_box" value="5">建设管理</input>
-                    <input type="checkbox" name="check_box" value="6">沉降监测</input>
-                </div>
-            </div>
 
 
             <div class="form-group">

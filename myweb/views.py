@@ -20,9 +20,9 @@ from django.utils import timezone
 from django.forms.models import model_to_dict
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse, JsonResponse
+import os
+
 User = get_user_model()
-
-
 MAPBASEPATH='/home/zhou/PycharmProjects/Back/Maps/'
 
 # Create your views here.
@@ -139,9 +139,19 @@ def _upload_map(request):
     map_name = request.POST.get("map_name", False)
     satelite= request.POST.get("satelite", False)
     desc=request.POST.get("desc", False)
-    wholemap= request.POST.get("wholemap", False)
-    thumbnail= request.POST.get("thumbnail", False)
-    map = Bmap.objects.create(map_name=map_name, satelite=satelite,desc=desc,wholemap_path=wholemap,thumbnail_path=thumbnail)
+    wholemap_name= request.POST.get("wholemap", False)
+    thumbnail_name= request.POST.get("thumbnail", False)
+    wholemap= request.FILES.get('wholemap')
+    thumbnail = request.FILES.get('thumbnail')
+    f1=open(os.path.join(BASE_DIR, 'static', 'pic', wholemap.name), 'wb')
+    f2=open(os.path.join(BASE_DIR, 'static', 'pic',thumbnail.name), 'wb')
+    for chunk in wholemap.chunks():
+        f1.write(chunk)
+    for chunk in thumbnail.chunks():
+        f2.write(chunk)
+    f1.close()
+    f2.close()
+    map = Bmap.objects.create(map_name=map_name, satelite=satelite,desc=desc,wholemap_path=wholemap_name,thumbnail_path=thumbnail_name)
     map.save()
     return render(request,'upload_map.html',{'message':'上传成功'})
 
@@ -208,27 +218,31 @@ def query_module(request):
         d_modules[i] = model_to_dict(modules[i])
     return render(request,'query_module.html',{'d_modules': json.dumps(d_modules, cls=DjangoJSONEncoder)})
 
-def fuzzy_search(message):
-    list1=[]
-    user1=list(User.objects.filter(username=message))
-    user2 =list(User.objects.filter(enterprise_name=message))
-    user3 = list(User.objects.filter(usr_type=message))
-    user4 = list(User.objects.filter(contact_usr=message))
-    user5 = list(User.objects.filter(phone=message))
-    users=((((list1.extend(user1)).extend(user2)).extend(user3)).extend(user4)).extend(user5)
-    users_sorted = list(set(users))
-    users_sorted.sort(key=users.index)
-    return users_sorted
-
 def info_revise(request):
     username=request.POST.get("username", False)
     return render(request, 'info_revise.html', {'username': username})
 
 def sinfo_revise(request):
-    return render(request, template_name='sinfo_revise.html')
+    username = request.session['username']
+    user = User.objects.get(username=username)
+    user = model_to_dict(user)
+    return render(request, 'sinfo_revise.html', {'user': json.dumps(user, cls=DjangoJSONEncoder)})
 
 def login(request):
     return render(request, template_name='login.html')
+
+
+def login_check(request):
+    username = request.POST.get("username", False)
+    password= request.POST.get("password", False)
+    user = auth.authenticate(username=username, password=password)
+    if user:
+        request.session['username']=username
+        auth.login(request, user)
+        return render(request, 'index.html', {'message1': '登录成功'})
+
+    else:
+       return render(request, 'login.html', {'message1': '用户名或密码错误'})
 
 
 def _info_revise(request):
@@ -272,7 +286,7 @@ def status_revise(request):
     user=User.objects.get(id=id)
     user.is_active=is_active
     user.save()
-    return render(request,'authorityManagement.html',{'userid':id,'isactive':is_active})
+    return HttpResponse("success")
 
 def permission_revise(request):
     userid = request.POST.get("id", False)
@@ -316,3 +330,30 @@ def _sinfo_revise(request):
             return render(request, 'sinfo_revise.html', {'message': '修改成功！'})
         else:
             return render(request, 'sinfo_revise.html', {'message': '用户不存在！'})
+
+def _add_superuser(request):
+    password = request.POST.get("password1", False)
+    username = request.POST.get("username", False)
+    enterprise_name = request.POST.get("enterprise_name", False)
+    contact_usr = request.POST.get("contact_usr", False)
+    phone = request.POST.get("phone", False)
+    user = User.objects.create_user(username=username, enterprise_name=enterprise_name, is_superuser=True,
+                                    contact_usr=contact_usr, phone=phone,password=password)
+    user.save()
+    return render(request, 'add_superuser.html', {'message': '添加成功'})
+
+def add_superuser(request):
+    return render(request,template_name="add_superuser.html")
+
+def mylogout(request):
+    logout(request)
+    return render(request,'login.html',{'islogin': False})
+
+def check_username(request):
+    username = request.POST.get('username', False)
+    user=User.objects.filter(username=username)
+    if user:
+        return HttpResponse("false")
+    else:
+        return HttpResponse("true")
+

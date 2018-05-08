@@ -59,8 +59,6 @@
                 <div class="col-lg-10" style="padding:0; background:#ffffff; display:flex; height:100%">
                     <span style="width:75%; text-align:left; padding-left:30px;"><font size="6"><b>天津未来科技城卫星遥感资源管理系统</b></font></span>
                     <span style="width:25%; height:100%; font-size:16px; text-align:end; margin-right:20px;">
-                        <img style="height:50%" src="{% static 'img/user_logo.png' %}">
-                        <a id="login" href="/login/" title="Login"><em class="glyphicon glyphicon-plus"></em>登录</a>
                         <span id="user_name" style="padding-left:10px"></span>
                         <a id="logout" href="/logout/" class="" title="Logout"><em class="glyphicon glyphicon-home"></em>登出</a>
                     </span>
@@ -74,14 +72,10 @@
                     <nav class="navbar-default navbar-side " role="navigation" style="height:100%; width:100%; background: #66759b;">
                         <div class="sidebar-collapse" style="height:100%;">
                             <ul class="nav" id="main-menu" style="height:100%;">
-                                <li class="menu-li">
-                                    <a id="home" class="active-menu menu-a" href="javascript:void(0)" onclick="open_link('/home/');" ><i class="fa fa-dashboard "></i>首页</a>
-                                </li>
-
                                 <li class="menu-li"><a class="menu-a" href="#"><i class="fa fa-desktop "></i>用户管理<span class="fa arrow"></span></a>
                                   <ul class="nav nav-second-level">
                                         <li>
-                                          <a href="javascript:void(0)" onclick="open_link('/account_show/');" ><i class="fa fa-toggle-on">用户查询</i></a>
+                                          <a href="javascript:void(0)" onclick="open_link('/account_show/');" ><i class="fa fa-toggle-on"></i>用户查询</a>
                                           </li>
                                         <li> <a href="javascript:void(0)" onclick="open_link('/add_Account/');"><i class="fa fa-toggle-on"></i>新增用户</a> </li>
 
@@ -104,7 +98,7 @@
                                             <a href="javascript:void(0)" onclick="open_link('/query_module/')" ><i class="fa fa-coffee"></i>模块查询</a>
                                         </li>
                                         <li>
-                                            <a href="javascript:void(0)" onclick="open_link('/add_module/')"></i>新增模块</a>
+                                            <a href="javascript:void(0)" onclick="open_link('/add_module/')"><i class="fa fa-bell "></i>新增模块</a>
                                         </li>
                                     </ul>
                                 </li>
