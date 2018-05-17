@@ -19,10 +19,13 @@ from django.http import FileResponse
 from django.utils import timezone
 from django.forms.models import model_to_dict
 from django.core.serializers.json import DjangoJSONEncoder
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse,StreamingHttpResponse
+from wsgiref.util import FileWrapper
 import os
-
+from myweb.ImagryProcess import Preprocess
+import time
 User = get_user_model()
+import tarfile
 MAPBASEPATH='/home/zhou/PycharmProjects/Back/Maps/'
 
 # Create your views here.
@@ -136,24 +139,33 @@ def query_map(request):
 
 
 def _upload_map(request):
+
     map_name = request.POST.get("map_name", False)
     satelite= request.POST.get("satelite", False)
     desc=request.POST.get("desc", False)
-    wholemap_name= request.POST.get("wholemap", False)
-    thumbnail_name= request.POST.get("thumbnail", False)
     wholemap= request.FILES.get('wholemap')
-    thumbnail = request.FILES.get('thumbnail')
-    f1=open(os.path.join(BASE_DIR, 'static', 'pic', wholemap.name), 'wb')
-    f2=open(os.path.join(BASE_DIR, 'static', 'pic',thumbnail.name), 'wb')
+    map=Bmap.objects.create(map_name=map_name,satelite=satelite,desc=desc,
+                            create_time=time.strftime('%Y-%m-%d', time.localtime(time.time())))
+    map.save()
+
+    f1=open(os.path.join(MAPBASEPATH,wholemap.name), 'wb')
     for chunk in wholemap.chunks():
         f1.write(chunk)
-    for chunk in thumbnail.chunks():
-        f2.write(chunk)
     f1.close()
-    f2.close()
-    map = Bmap.objects.create(map_name=map_name, satelite=satelite,desc=desc,wholemap_path=wholemap_name,thumbnail_path=thumbnail_name)
-    map.save()
-    return render(request,'upload_map.html',{'message':'上传成功'})
+    tar=tarfile.open(os.path.join(MAPBASEPATH,wholemap.name))
+    target=os.path.join(MAPBASEPATH,str(map.id))
+    if os.path.exists(target):
+        return render(request, 'upload_map.html', {'message': '文件已存在！'})
+    else:
+        os.mkdir(target)
+    # if not os.path.join(MAPBASEPATH,str(max(idlist)+1)):
+    #     os.mkdir(target)
+    for file in tar:
+        tar.extract(file,target)
+    tar.close()
+    Bmap.objects.filter(id=map.id).update(sourcefile=target)
+
+    return render(request,'upload_map.html',{'message':Preprocess.preprogress(map.id)})
 
 
 def deliver_map(request):
@@ -172,11 +184,31 @@ def _download_map(request):
         map = Bmap.objects.get(id=mapid)
         filename=map.wholemap_path
         pathname=map.wholemap_path.split('.')[0]
-        file = open(MAPBASEPATH+pathname+'/'+filename, 'rb')
-        response = FileResponse(file)
+        wrapper = FileWrapper(open(MAPBASEPATH+pathname+'/'+filename, 'rb'))
+        response = HttpResponse(wrapper)
         response['Content-Type'] = 'application/octet-stream'
         response['Content-Disposition'] = 'attachment;filename='+filename
         return response
+
+
+#   def file_iterator(file_name, chunk_size=512):
+#      with open(file_name,'rb') as f:
+#        while True:
+#          c = f.read(chunk_size)
+#          if c:
+#            yield c
+#          else:
+#            break
+#
+# def _download_map(request):
+#     mapid = request.GET.get("id", False)
+#     map = Bmap.objects.get(id=mapid)
+#     filename=map.wholemap_path
+#     pathname=map.wholemap_path.split('.')[0]
+#     response = StreamingHttpResponse(file_iterator(MAPBASEPATH+pathname+'/'+filename))
+#     response['Content-Type'] = 'application/octet-stream'
+#     response['Content-Disposition'] = 'attachment;filename="{0}"'.format(the_file_name)
+#     return response
 
 def _delete_map(request):
     mapid=request.GET.get("id", False)
@@ -356,4 +388,3 @@ def check_username(request):
         return HttpResponse("false")
     else:
         return HttpResponse("true")
-

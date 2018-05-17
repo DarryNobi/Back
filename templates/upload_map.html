@@ -14,65 +14,6 @@
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-<script>
-$().ready(function() {
-// 在键盘按下并释放及提交后验证提交表单
-  $("#add_account_form").validate({
-    rules: {
-      username: {
-        required: true,
-        minlength: 2,
-        remote:{
-
-                    type:"POST",
-                    url:"/check_username/", //请求地址
-                    data:{
-                     csrfmiddlewaretoken: '{{ csrf_token }}',
-                        "username":function(){return $("#username").val();}
-                    }
-                }
-
-      },
-      password1: {
-        required: true,
-        minlength: 8
-      },
-      password2: {
-        required: true,
-        minlength: 8,
-        equalTo: "#password1"
-      },
-       phone:{
-	      minlength: 11,
-          maxlength: 11,
-          digits:true
-	      }
-
-    },
-     messages: {
-	    	username: {
-	        required: "请输入用户名",
-	        minlength: "用户名至少8位",
-	        remote: "用户名已存在"
-	      },
-	      password1: {
-	          required: "请输入密码",
-	          minlength: "密码长度至少8位"
-	        },
-	        password2: {
-	          required: "请输入密码",
-	          <!--minlength: "密码长度不能小于8位",-->
-	          equalTo: "两次密码输入不一致"
-	        },
-	        phone:{
-	        maxlength:"手机号格式错误",
-	        minlength:"手机号格式错误",
-	        digits:"手机号格式错误"
-	        }
-	    }
-    })
-});</script>
-
 
 
 
@@ -142,15 +83,16 @@ $().ready(function() {
 <body>
 <div class="container">
     <div class="col-md-8 col-md-offset-2">
-        <form action="/_upload_map/" class="" method="post" id="upload_map_form">
- {% csrf_token %}
+        <form action="/_upload_map/" class="" method="post" id="upload_map_form" method=POST  enctype=multipart/form-data>
+        {% csrf_token %}
             <div class="form-group has-feedback">
                 <label for="userNum"><h4>地图名称</h4></label>
                 <div class="input-group">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
                     <input id="map_name" name="map_name" class="form-control" placeholder="请输入地图名称" maxlength="20" type="text">
                 </div>
-          <div class="form-group has-feedback">
+            </div>
+            <div class="form-group has-feedback">
                 <label for="department"><h4>卫星类型</h4></label>
                 <div class="input-group",name="input-group">
                     <select style="size: 6;" name="satelite">
@@ -159,46 +101,21 @@ $().ready(function() {
                         <option value="资源一号" name="forest">资源一号</option>
                     </select>
                 </div>
-
-
             </div>
-
-
-            </div>
-
             <div class="form-group has-feedback">
                 <label for="password"><h4>描述</h4></label>
                 <div class="input-group">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
                     <input id="desc" name="desc" class="form-control" placeholder="请输入描述信息" maxlength="20" type="text">
                 </div>
-
             </div>
-
-            <div class="form-group has-feedback">
-                <label for="passwordConfirm"><h4>上传缩略图</h4></label>
-                <div class="input-group">
-                    <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
-                    <input id="thumbnail_text" class="form-control"  maxlength="20" type="text">
-                    <input id="thumbnail" name="thumbnail" class="form-control" maxlength="20" type="file">
-                </div>
-
-
              <div class="form-group has-feedback">
                 <label for="username"><h4>上传图包</h4></label>
                 <div class="input-group">
                     <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                    <input id="wholemap_text" class="form-control"  maxlength="20" type="text">
-                    <input id="wholemap" name="wholemap" class="form-control"  maxlength="20" type="file">
+                    <input type="file" id="wholemap" name="wholemap" class="form-control"/>
                 </div>
-
-
             </div>
-
-
-
-
-
 
             <div class="form-group">
                 <input style="height:50px;" class="form-control btn btn-primary" id="submit" value="上&nbsp;&nbsp;传&nbsp;&nbsp;图&nbsp;&nbsp;像" type="submit">
@@ -217,6 +134,9 @@ $("#wholemap_text").val($("#wholemap").val());
 });
 $("#thumbnail").change(function(){
 $("#thumbnail_text").val($("#thumbnail").val());
+});
+$("#submit").click(function(){
+    $("#submit").val("上传中");
 });
 
 </script>
