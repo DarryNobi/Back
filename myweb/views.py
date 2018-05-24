@@ -182,12 +182,12 @@ def _download_map(request):
     mapid=request.GET.get("id",False)
     if mapid:
         map = Bmap.objects.get(id=mapid)
-        filename=map.wholemap_path
-        pathname=map.wholemap_path.split('.')[0]
-        wrapper = FileWrapper(open(MAPBASEPATH+pathname+'/'+filename, 'rb'))
+        file=map.downloadfile
+        name=os.path.basename(file)
+        wrapper = FileWrapper(open(file, 'rb'))
         response = HttpResponse(wrapper)
         response['Content-Type'] = 'application/octet-stream'
-        response['Content-Disposition'] = 'attachment;filename='+filename
+        response['Content-Disposition'] = 'attachment;filename='+name
         return response
 
 

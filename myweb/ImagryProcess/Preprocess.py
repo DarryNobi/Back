@@ -21,12 +21,12 @@ def preprogress(id):
             name = file
             folder=source
             image = os.path.join(folder,name)
-        elif('PAN1.jpg' in file):
+        elif re.search(r'PAN\d.jpg',file):
             thumbnail_path=os.path.join(source,file)
             os.chdir(source)
             downloadfile.add(file,recursive=False)
             os.chdir(cwd)
-        elif('PAN1.xml' in file):
+        elif re.search(r'PAN\d.xml',file):
             os.chdir(source)
             downloadfile.add(file,recursive=False)
             os.chdir(cwd)
@@ -64,7 +64,7 @@ def preprogress(id):
             rpcFile=open(image.replace('_fusion.tif','.rpb'),'r')
             text=rpcFile.readlines()
             for line in text:
-                hoffLine=re.search(r'heightOffset = ([+|-|\d]\d+.?\d+)',line)
+                hoffLine=re.search(r'heightOffset = ([\+|\-|\d]\d+\.?\d+)',line)
                 if hoffLine:
                     hoff=hoffLine.group(1)
                     break

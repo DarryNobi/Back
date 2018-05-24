@@ -4,7 +4,7 @@
        {% load staticfiles %}
 <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=9">
-<title>上传地图</title>
+    <title>上传地图</title>
      {% csrf_token %}
     <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'js/jquery.validate.min.js' %}"></script>
@@ -84,7 +84,7 @@
 <div class="container">
     <div class="col-md-8 col-md-offset-2">
         <form action="/_upload_map/" class="" method="post" id="upload_map_form" method=POST  enctype=multipart/form-data>
-        {% csrf_token %}
+            {% csrf_token %}
             <div class="form-group has-feedback">
                 <label for="userNum"><h4>地图名称</h4></label>
                 <div class="input-group">
