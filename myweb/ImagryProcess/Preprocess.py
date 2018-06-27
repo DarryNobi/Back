@@ -4,8 +4,10 @@ import re
 import gdal
 from myweb.models import Bmap
 import tarfile
-
+from myweb.ImagryProcess import coords_to_geojson
+from PIL import Image
 def preprogress(id):
+    labelpath=""
     cwd=os.getcwd()
     source = Bmap.objects.get(id=id).sourcefile
     gdal.AllRegister()
@@ -30,6 +32,8 @@ def preprogress(id):
             os.chdir(source)
             downloadfile.add(file,recursive=False)
             os.chdir(cwd)
+        elif('Label' in file):
+            labelpath=os.path.join(source,file)
 
     try:
             imageDS = gdal.Open(image.encode('utf-8'), gdal.GA_ReadOnly)
@@ -97,6 +101,25 @@ def preprogress(id):
                 iCurNum /= 4
             DS.BuildOverviews(overviewlist=anLevels)
             DS = None
+            if labelpath:
+                shutil.copyfile(image.replace('.tif','_rpc.txt'),'Label_rpc.txt')
+                warpOP = gdal.WarpOptions(dstSRS='WGS84', rpc=True, multithread=True, errorThreshold=0.0,
+                                          creationOptions=['Tiled=yes'],
+                                          resampleAlg=gdal.gdalconst.GRIORA_Bilinear, transformerOptions=RpcHeight,
+                                          dstNodata=255)
+                LabelDS = gdal.Open(labelpath.encode('utf-8'), gdal.GA_ReadOnly)
+                LabelRPC = os.path.join(source, 'LabelR.tif')
+                srcDS = gdal.Warp(LabelRPC.encode('utf-8').decode(), LabelDS, options=warpOP)
+                LabelDS=None
+                srcDS=None
+                im = Image.open(LabelRPC)
+                im.save(os.path.join(source, 'Label.png'))
+                coords_to_geojson.geojson_make(os.path.join(source, 'Label.png'),source)
+                os.chdir(os.path.dirname(LabelRPC))
+                for file in os.listdir(os.path.dirname(LabelRPC)):
+                    if "json" in file:
+                        downloadfile.add(file)
+                os.chdir(cwd)
             os.chdir(os.path.dirname(imageRPC))
             downloadfile.add(os.path.basename(imageRPC))
             downloadfile.close()
@@ -104,4 +127,5 @@ def preprogress(id):
             Bmap.objects.filter(id=id).update(IsUnit8=1,thumbnail_path=thumbnail_path,downloadfile=downloadpath)
             return "上传成功！"
     except Exception as err:
+        Bmap.objects.filter(id=id).delete()
         return str(err)

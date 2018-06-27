@@ -44,7 +44,7 @@ class Module(models.Model):
 
 class Bmap(models.Model):
     map_name=models.CharField(max_length=20,blank=True)
-    create_time=models.DateField(blank=True)
+    create_time=models.DateField(auto_now_add=True)
     #ReceiveTime = models.DateField(default=False, blank=True)
     satelite=models.CharField(max_length=20,blank=True)
     download_times=models.IntegerField(default=0)

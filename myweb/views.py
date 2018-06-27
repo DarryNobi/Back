@@ -26,7 +26,7 @@ from myweb.ImagryProcess import Preprocess
 import time
 User = get_user_model()
 import tarfile
-MAPBASEPATH='/home/zhou/PycharmProjects/Back/Maps/'
+MAPBASEPATH='/media/zhou/系统/二期图像2/天津航天城'
 
 # Create your views here.
 
@@ -140,36 +140,39 @@ def query_map(request):
 
 def _upload_map(request):
 
-    map_name = request.POST.get("map_name", False)
-    satelite= request.POST.get("satelite", False)
-    desc=request.POST.get("desc", False)
-    wholemap= request.FILES.get('wholemap')
-    map=Bmap.objects.create(map_name=map_name,satelite=satelite,desc=desc,
-                            create_time=time.strftime('%Y-%m-%d', time.localtime(time.time())))
-    map.save()
+    try:
+        map_name = request.POST.get("map_name", False)
+        satelite= request.POST.get("satelite", False)
+        desc=request.POST.get("desc", False)
+        wholemap= request.FILES.get('wholemap')
+        map=Bmap.objects.create(map_name=map_name,satelite=satelite,desc=desc,
+                                create_time=time.strftime('%Y-%m-%d', time.localtime(time.time())))
+        map.save()
 
-    f1=open(os.path.join(MAPBASEPATH,wholemap.name), 'wb')
-    for chunk in wholemap.chunks():
-        f1.write(chunk)
-    f1.close()
-    tar=tarfile.open(os.path.join(MAPBASEPATH,wholemap.name))
-    target=os.path.join(MAPBASEPATH,str(map.id))
-    if os.path.exists(target):
-        return render(request, 'upload_map.html', {'message': '文件已存在！'})
-    else:
-        os.mkdir(target)
-    # if not os.path.join(MAPBASEPATH,str(max(idlist)+1)):
-    #     os.mkdir(target)
-    for file in tar:
-        tar.extract(file,target)
-    tar.close()
-    Bmap.objects.filter(id=map.id).update(sourcefile=target)
-
-    return render(request,'upload_map.html',{'message':Preprocess.preprogress(map.id)})
+        f1=open(os.path.join(MAPBASEPATH,wholemap.name), 'wb')
+        for chunk in wholemap.chunks():
+            f1.write(chunk)
+        f1.close()
+        tar=tarfile.open(os.path.join(MAPBASEPATH,wholemap.name))
+        target=os.path.join(MAPBASEPATH,str(map.id))
+        if os.path.exists(target):
+            return render(request, 'upload_map.html', {'message': '文件已存在！'})
+        else:
+            os.mkdir(target)
+        # if not os.path.join(MAPBASEPATH,str(max(idlist)+1)):
+        #     os.mkdir(target)
+        for file in tar:
+            tar.extract(file,target)
+        tar.close()
+        Bmap.objects.filter(id=map.id).update(sourcefile=target)
+        return render(request,'upload_map.html',{'message':Preprocess.preprogress(map.id)})
+    except Exception as err:
+        Bmap.objects.filter(id=map.id).delete()
+        return render(request,'upload_map.html',{'message':str(err)})
 
 
 def deliver_map(request):
-    maps_temp = Bmap.objects.all()
+    maps_temp = Bmap.objects.all().order_by('-create_time')
     d_maps = {}
     for i in range(len(maps_temp)):
         d_maps[i] = model_to_dict(maps_temp[i])
