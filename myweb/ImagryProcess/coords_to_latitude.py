@@ -1,18 +1,15 @@
-import gdal
-import numpy
+
 from myweb.ImagryProcess import WCS_transform
+class transform:
+    def __init__(self, GeoTransform):
+        self.adfGeoTransform = GeoTransform
+    def transforms(self,x,y):
 
-def transform(x,y):
-    gdal.AllRegister()
-    filePath='./GF2_PMS2_E117.4_N39.1_20170510_L1A0002351826-MSS2_fusionR.tif'
-    ds=gdal.Open(filePath)
-    adfGeoTransform = ds.GetGeoTransform()
-
-    px = adfGeoTransform[0] + x * adfGeoTransform[1] + y * adfGeoTransform[2]
-    py = adfGeoTransform[3] + x * adfGeoTransform[4] + y * adfGeoTransform[5]
-    # print(px,py)
-    [ppy,ppx]=WCS_transform.wgs2mercator(py,px)
-    return [ppx,ppy]
+        px = self.adfGeoTransform[0] + x * self.adfGeoTransform[1] + y * self.adfGeoTransform[2]
+        py = self.adfGeoTransform[3] + x * self.adfGeoTransform[4] + y * self.adfGeoTransform[5]
+        # print(px,py)
+        [ppy,ppx]=WCS_transform.wgs2mercator(py,px)
+        return [ppx,ppy]
 
 
 def main():

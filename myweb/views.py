@@ -125,7 +125,6 @@ def _permissions_query(request):
 def upload_map(request):
     return render(request,
                   template_name='upload_map.html')
-
 def password_revise(request):
     return render(request,
                   template_name='password_revise.html')
@@ -166,6 +165,7 @@ def _upload_map(request):
         tar.close()
         Bmap.objects.filter(id=map.id).update(sourcefile=target)
         return render(request,'upload_map.html',{'message':Preprocess.preprogress(map.id)})
+        # return render(request, 'upload_map.html', {'message': Preprocess.preprogress(410)})
     except Exception as err:
         Bmap.objects.filter(id=map.id).delete()
         return render(request,'upload_map.html',{'message':str(err)})
